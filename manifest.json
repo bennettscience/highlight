@@ -1,9 +1,9 @@
 {
     "manifest_version": 2,
-    "name":"New Gmail Window",
+    "name":"Simple Highlighter",
     "version": "1.0",
     
-    "description": "Opens a new Gmail compose window",
+    "description": "Highlight web text and send it to a new Google Doc",
     
     "permissions":[ "tabs", "contextMenus" ],
 }
