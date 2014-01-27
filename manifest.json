@@ -2,8 +2,26 @@
     "manifest_version": 2,
     "name":"Simple Highlighter",
     "version": "1.0",
+    "icons": {
+        "19":"img19.png",
+        "48":"48.png"
+    },
+    
+    "content_scripts": [{
+            "matches": ["<all_urls>"],
+            "js":["contentscript.js"]
+        }],
+    
+     "background": {
+        "scripts": [ "background.js" ]
+    },
+    
+    "permissions":[ "tabs", "activeTab" ],
     
     "description": "Highlight web text and send it to a new Google Doc",
     
-    "permissions":[ "tabs", "contextMenus" ],
+    "browser_action": {
+        "default_icon": { "19":"img19.png" },
+        "default_title":"Simple Highlighter"
+    }
 }
