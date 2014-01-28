@@ -10,7 +10,7 @@
     "content_scripts": [{                   // content script permissions
             "matches": ["<all_urls>"],
             "js":["js/contentscript.js"],
-            "css":["js/style.css"]
+            "css":["css/style.css"]
         }],
     
      "background": {
