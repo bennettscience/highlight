@@ -8,8 +8,9 @@
     },
     
     "content_scripts": [{                   // content script permissions
-            // "matches": ["<all_urls>"],
-            "js":["contentscript.js"]
+            "matches": ["<all_urls>"],
+            "js":["contentscript.js"],
+            "css":["style.css"]
         }],
     
      "background": {
