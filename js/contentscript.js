@@ -1,23 +1,27 @@
-chrome.runtime.onMessage.addListener( 
+/* chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {     
         if (request.method == "getSelection") 
             sendResponse({data: window.getSelection().toString()});
         else sendResponse({});
         }  
-)
-
-
-/* chrome.runtime.onMessage.addListener(
-    function(request, sender, sendResposne) {
-       function addClass() {
-        if (request.method == "getSelection") {
-            var newSpan = document.createElement('span');
-            newSpan.setAttribute('class','hiliteNode');
-            document.getElementById('text').appendChild(newSpan);
-            newSpan.innerHTML = selectedText;
-            console.log("newSpan added");
-        }
-        else return 
-        }
-    }
 ) */
+
+function getText(tabs) {
+    var text = window.getSelection().toString();
+    alert(text)
+    var selection = window.getSelection().getRangeAt(0);
+    var selectedText = selection.extractContents();
+    var span = document.createElement("span");
+    span.style.backgroundColor = "yellow";
+    span.appendChild(selectedText);
+    span.onclick = function (ev) {
+        this.parentNode.insertBefore(
+            document.createTextNode(this.innerHTML),
+            this
+        );
+        this.parentNode.removeChild(this);
+    }
+    selection.insertNode(span);
+}
+
+getText();
