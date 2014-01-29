@@ -3,17 +3,21 @@ chrome.runtime.onMessage.addListener(
         if (request.method == "getSelection") 
             sendResponse({data: window.getSelection().toString()});
         else sendResponse({});
-        }
+        }  
 )
 
-chrome.runtime.onMessage.addListener(
-    function addClass() {
+
+/* chrome.runtime.onMessage.addListener(
+    function(request, sender, sendResposne) {
+       function addClass() {
         if (request.method == "getSelection") {
             var newSpan = document.createElement('span');
             newSpan.setAttribute('class','hiliteNode');
             document.getElementById('text').appendChild(newSpan);
             newSpan.innerHTML = selectedText;
+            console.log("newSpan added");
         }
-        else return
+        else return 
+        }
     }
-)
+) */

@@ -6,8 +6,8 @@ chrome.browserAction.onClicked.addListener(function() {
     });
 });
 
- function sendServiceRequest(selectedText) {
+function sendServiceRequest(selectedText) {
     var serviceCall = 'http://www.google.com/search?q=' + selectedText;
     chrome.tabs.create({url: serviceCall});
     console.log(selectedText)
-} 
+}
