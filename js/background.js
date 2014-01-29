@@ -6,16 +6,18 @@
     });
 }); */
 
-//When the argument length is two, it is coming from the
-//context menu. A single argument is from the browser action.
-//Shared from http://stackoverflow.com/q/6499471/2278429
+// When the argument length is two, it is coming from the
+// context menu. A single argument is from the browser action.
+// Shared from http://stackoverflow.com/q/6499471/2278429
 function runHighlight() {
     var tab = arguments.length == 2 ? arguments[1] : arguments[0];
     chrome.tabs.executeScript(null, {file: 'js/contentscript.js'})
 }
 
+// Browser action command
 chrome.browserAction.onClicked.addListener(runHighlight);
 
+// Context menu command
 chrome.contextMenus.create({
     title: "Hilight this!",
     contexts: ['selection'],

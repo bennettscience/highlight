@@ -17,7 +17,7 @@
         "scripts": [ "js/background.js" ]
     },
     
-    "permissions":[ "tabs", "activeTab" ],
+    "permissions":[ "tabs", "activeTab", "contextMenus", "clipboardWrite", "clipboardRead" ],
     
     "description": "Highlight web text and send it to a new Google Doc",
     

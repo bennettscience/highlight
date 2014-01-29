@@ -1,7 +1,9 @@
 function getText(tabs) {
-    var text = window.getSelection().toString();
+    var text = document.getSelection().toString();
+    console.log(text);
 }
-getText();
+
+
 
 // This script is from Tim Downs as posted to Stack Overflow
 // http://stackoverflow.com/a/1623974/2278429
@@ -20,6 +22,8 @@ function makeEditableAndHighlight(colour) {
     if (!document.execCommand("HiliteColor", false, '#FFFF00')) {
         document.execCommand("BackColor", false, '#FFFF00');
     }
+
     document.designMode = "off";
 }
 makeEditableAndHighlight();
+getText();
