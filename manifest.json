@@ -1,17 +1,17 @@
 {
     "manifest_version": 2,
     "name":"Simple Highlighter",
-    "version": "0.20",
+    "version": "1.0",
     "icons": {
         "19":"img/img19.png",
         "48":"img/img48.png"
     },
     
-    "content_scripts": [{                   // content script permissions
+    /* "content_scripts": [{                   // content script permissions
             "matches": ["<all_urls>"],
             // "js":["js/contentscript.js"],
             "css":["css/style.css"]
-        }],
+        }],*/
     
      "background": {
         "scripts": [ "js/background.js" ]
