@@ -1,39 +1,53 @@
-// This script is from Tim Downs as posted to Stack Overflow
-// http://stackoverflow.com/a/1623974/2278429
-// Modified to add an ID to the newly created span
+var serializedRange;
 
-function addSpanId(color) {
-    // Gets the selection range
-    var range, sel = window.getSelection();
-    if (sel.rangeCount && sel.getRangeAt) {
-        range = sel.getRangeAt(0);
-    }
-    // Makes the DOM editable
+// Serializes and returns a specified range
+// Ignores the range if the length is zero
+function serializeRange(range) {
+    return (!range || (range.startOffset === range.endOffset)) ? null : {
+        startContainer: range.startContainer,
+        startOffset:    range.startOffset,
+        endContainer:   range.endContainer,
+        endOffset:      range.endOffset
+    };
+}
+
+// Restores the specific serialized version
+// by removing any ranges currently selected
+function restoreRange(serialized) {
+    var range = document.createRange();
+    range.setStart(serialized.startContainer, serialized.startOffset);
+    range.setEnd(serialized.endContainer, serialized.endOffset);
+    
+    var sel = window.getSelection();
+    sel.removeAllRanges();
+    sel.addRange(range);
+}
+
+// Highlights the current selected range OR removes
+// highlight from a previously selected range
+function toggleHilite() {
     document.designMode = "on";
-    if (range) {
+    
+    var sel = window.getSelection();
+    if (serializedRange) {
+        restoreRange(serializedRange);
+        serializedRange = null;
+        document.execCommand('removeFormat', false, null);
         sel.removeAllRanges();
-        sel.addRange(range);
+    } else {
+        // There is no highlighted range, add highlight
+        // to the current range if there is one
+        if (sel.rangeCount && sel.getRangeAt) {
+            document.execCommand('hiliteColor', false, '#FFFF00');
+            serializedRange = serializeRange(sel.getRangeAt(0));
+            // serializes the range after the highlight is added
+            // `execCommadn1 changes the DOM, which afects the
+            // range's start-/endContainer and offsets.
+        }
     }
-    // Use HiliteColor since some browsers apply BackColor to the whole block
-    // Sets the color of the new span
-    if (!document.execCommand("HiliteColor", false, '#FFFF00')) {
-        document.execCommand("BackColor", false, '#FFFF00');
-    }
+
     document.designMode = "off";
-    
-    //Setting an ID for the new span element
-    var theChange = document.getSelection().toString();
-    
-    // Explicitely creating a span element from the selection
-    var newSpan = document.createElement('span');
-    
-    // Setting the ID to something we can serialize
-    newSpan.id = "newHL";
-    
-    // Inserting the selected text into the span element
-    newSpan.innerHTML = theChange;
    
 }; 
 
-addSpanId();
-
+toggleHilite();
