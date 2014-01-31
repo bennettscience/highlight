@@ -1,53 +1,61 @@
 var serializedRange;
 
-// Serializes and returns a specified range
-// Ignores the range if the length is zero
+/* Serializes and returns the specified range
+ * (ignoring it if its length is zero) */
 function serializeRange(range) {
-    return (!range || (range.startOffset === range.endOffset)) ? null : {
-        startContainer: range.startContainer,
-        startOffset:    range.startOffset,
-        endContainer:   range.endContainer,
-        endOffset:      range.endOffset
-    };
+    return (!range || ((range.startContainer === range.endContainer)
+                       && (range.startOffset === range.endOffset)))
+            ? null : {
+                startContainer: range.startContainer,
+                startOffset:    range.startOffset,
+                endContainer:   range.endContainer,
+                endOffset:      range.endOffset
+            };
 }
 
-// Restores the specific serialized version
-// by removing any ranges currently selected
+/* Restores the specified serialized version
+ * (removing any ranges currently seleted) */
 function restoreRange(serialized) {
     var range = document.createRange();
     range.setStart(serialized.startContainer, serialized.startOffset);
     range.setEnd(serialized.endContainer, serialized.endOffset);
-    
+
     var sel = window.getSelection();
     sel.removeAllRanges();
     sel.addRange(range);
 }
 
-// Highlights the current selected range OR removes
-// highlight from a previously selected range
+function clearSelection() {
+    if (window.getSelection) window.getSelection().removeAllRanges();
+    else if (document.selection) document.selection.empty();
+}
+
+/* Hilites the currently selected range or removes the hilite
+ * (if there is a previously serialized range) */
 function toggleHilite() {
-    document.designMode = "on";
-    
+    document.designMode = 'on';
+
     var sel = window.getSelection();
     if (serializedRange) {
+        /* There is a hilited range, let's remove the hilite */
         restoreRange(serializedRange);
         serializedRange = null;
         document.execCommand('removeFormat', false, null);
-        sel.removeAllRanges();
+
     } else {
-        // There is no highlighted range, add highlight
-        // to the current range if there is one
+        /* There is no hilited range, so hilite
+         * the currently selected range (if any) */
         if (sel.rangeCount && sel.getRangeAt) {
             document.execCommand('hiliteColor', false, '#FFFF00');
             serializedRange = serializeRange(sel.getRangeAt(0));
-            // serializes the range after the highlight is added
-            // `execCommadn1 changes the DOM, which afects the
+            // it is important to serialize the range *after* hiliting,
+            // because `execCommand` will change the DOM affecting the
             // range's start-/endContainer and offsets.
         }
     }
 
-    document.designMode = "off";
-   
-}; 
+    document.designMode = 'off';
+}
 
 toggleHilite();
+//clearSelection();
