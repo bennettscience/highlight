@@ -11,16 +11,16 @@
 // Shared from http://stackoverflow.com/q/6499471/2278429
 function runHighlight() {
     var tab = arguments.length == 2 ? arguments[1] : arguments[0];
-    chrome.tabs.executeScript(null, {file: 'js/contentscript.js'})
+    chrome.tabs.executeScript(null, {file: 'js/content.js'})
 }
 
 // Browser action command
 chrome.browserAction.onClicked.addListener(runHighlight);
 
 // Context menu command
-chrome.contextMenus.create({
+/*chrome.contextMenus.create({
     title: "Hilight this!",
     contexts: ['selection'],
     onclick: runHighlight
-});
+});*/
 
