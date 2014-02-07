@@ -11,7 +11,7 @@
 // Shared from http://stackoverflow.com/q/6499471/2278429
 function runHighlight() {
     var tab = arguments.length == 2 ? arguments[1] : arguments[0];
-    chrome.tabs.executeScript(null, {file: 'js/content.js'})
+    chrome.tabs.executeScript(null, {file: 'js/content-dev.js'})
 }
 
 // Browser action command
