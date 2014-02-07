@@ -13,6 +13,10 @@ function serializeRange(range) {
             };
 }
 
+function saveSerializedRange(range) {
+    var select = document.get
+}
+
 /* Restores the specified serialized version
  * (removing any ranges currently seleted) */
 function restoreRange(serialized) {
@@ -25,24 +29,19 @@ function restoreRange(serialized) {
     sel.addRange(range);
 }
 
-function clearSelection() {
-    if (window.getSelection) window.getSelection().removeAllRanges();
-    else if (document.selection) document.selection.empty();
-}
-
 /* Hilites the currently selected range or removes the hilite
  * (if there is a previously serialized range) */
 function toggleHilite() {
     document.designMode = 'on';
 
-    var sel = window.getSelection();
-    if (serializedRange) {
-        /* There is a hilited range, let's remove the hilite */
+   var sel = window.getSelection();
+   if (serializedRange) {
+        //There is a hilited range, let's remove the hilite
         restoreRange(serializedRange);
         serializedRange = null;
         document.execCommand('removeFormat', false, null);
-
-    } else {
+   }
+    else { 
         /* There is no hilited range, so hilite
          * the currently selected range (if any) */
         if (sel.rangeCount && sel.getRangeAt) {
@@ -58,4 +57,3 @@ function toggleHilite() {
 }
 
 toggleHilite();
-//clearSelection();
